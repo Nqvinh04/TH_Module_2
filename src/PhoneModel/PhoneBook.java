@@ -98,4 +98,16 @@ public class PhoneBook {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+    public String[] infoToString() {
+        String[] info = new String[7];
+        info[0] = this.getPhoneNumber();
+        info[1] = this.getGroup();
+        info[2] = this.getFullName();
+        info[3] = this.getGender();
+        info[4] = this.getAddress();
+        info[5] = this.getBirthday();
+        info[6] = this.getEmail();
+        return  info;
+    }
 }

@@ -13,57 +13,99 @@ public class PhonebookManager {
     private FilePhone filePhone;
     private ArrayList<PhoneBook> phoneBookArrayList;
 
-//    public PhonebookManager() throws IOException {
-//        filePhone = new FilePhone();
-//        phoneBookArrayList = filePhone.readFile();
-//    }
+    public PhonebookManager() throws IOException {
+        filePhone = new FilePhone();
+        phoneBookArrayList = filePhone.readFile();
+    }
 
     // xem danh sách danh bạ
-    public void showPhone(){
-
+    public void showPhone() throws IOException {
+        phoneBookArrayList = filePhone.readFile();
+        System.out.println(phoneBookArrayList);
+//        for (PhoneBook phoneBookList: phoneBookArrayList){
+//            System.out.println(phoneBookList.getPhoneNumber());
+//        }
     }
 
     // thêm mới danh bạ
     public void addPhoneBook(){
-
+        String phoneNumber = inputPhoneNumber();
+        String group = inputGroup();
+        String fullName = inputFullName();
+        String gender = inputGender();
+        String address = inputAddress();
+        String birthday = inputBirthday();
+        String email = inputEmail();
+        PhoneBook phoneBook = new PhoneBook
+                ( phoneNumber, group, fullName, gender, address, birthday, email );
+        phoneBookArrayList.add(phoneBook);
+        System.out.println(phoneBookArrayList);
     }
 
     // cập nhật danh bạ
-    public  void editPhone(){
-
+    public  void editPhone(String phoneNumber){
+        boolean isExist = false;
+        for (PhoneBook phoneBook : phoneBookArrayList) {
+            if (phoneBook.getPhoneNumber().equals(phoneNumber)) {
+                isExist = true;
+                phoneBook.setPhoneNumber(inputPhoneNumber());
+                phoneBook.setGroup(inputGroup());
+                phoneBook.setGender(inputGender());
+                phoneBook.setAddress(inputAddress());
+                phoneBook.setBirthday(inputBirthday());
+                phoneBook.setEmail(inputEmail());
+                break;
+            }
+            if (!isExist){
+                System.out.println("Sô điện thoại: " + phoneNumber + "không tồn tại");
+            } else {
+                System.out.println(phoneBookArrayList);
+            }
+        }
     }
 
     // xóa thông tin danh bạn
-    public void deletePhone(){
-
+    public void deletePhone(String phoneNumber){
+        PhoneBook phoneBook = null;
+        int size = phoneBookArrayList.size();
+        for (int i = 0; i < size; i++){
+            if(phoneBookArrayList.get(i).getPhoneNumber().equals(phoneNumber)){
+                phoneBook = phoneBookArrayList.get(i);
+                break;
+            }
+        }
+        if (phoneBook != null){
+            phoneBookArrayList.remove(phoneBook);
+            //filePhone.writeFile(phoneBookArrayList);
+        } else {
+            System.out.printf("Sô điện thoại = %d không tồn tại.\n",phoneNumber );
+        }
     }
+
 
     // Tìm số điện thoại
-    public void findPhone(){
+    public void findPhoneByPhonenumber(String phoneNumber) {
+        for (PhoneBook phoneNumberList : phoneBookArrayList) {
+            if (phoneNumberList.getPhoneNumber().equals(phoneNumber)) {
+                System.out.println(phoneNumberList);
+            }
 
+        }
     }
 
-//    // Đọc văn bản
-//    public void readFile(){
-//
-//    }
-//
-//    // ghi văn bản
-//    public void writeFile(){
-//
-//    }
+    public void findPhoneByFullName(String fullName) {
+        for (PhoneBook phoneNumberList : phoneBookArrayList) {
+            if (phoneNumberList.getPhoneNumber().equals(fullName)) {
+                System.out.println(phoneNumberList);
+            }
+        }
+    }
 
     //Nhập số điện thoại
     public String inputPhoneNumber(){
         System.out.println("Nhập số điện thoại: ");
         String phoneNumber = sc.nextLine();
         return phoneNumber;
-//        String regexPhoneNumber ="[0-9]{10}";
-//        if (phoneNumber.equals(regexPhoneNumber)){
-//            return phoneNumber;
-//        } else {
-//            System.out.println("Vui lòng nhập lại thông tin: ");
-//        }
 
     }
 
